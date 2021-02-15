@@ -2,8 +2,9 @@ package game;
 
 import lombok.Data;
 
+import java.awt.*;
+
 @Data
 public class SnakeBody {
-    private int posX = 0;
-    private int posY = 0;
+    private Point position;
 }

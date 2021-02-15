@@ -1,36 +1,39 @@
 package app;
 
-import simulation.Clock;
-import simulation.Simulation;
-import simulation.SnakeSimulation;
-
-import java.util.ArrayList;
+import genetic.Population;
 
 public class SnakeGame {
 
     private static int width = 1200;
     private static int height = 1000;
 
-    private static int xOffset = 120;
-    private static int yOffset = 100;
+    private static int xOffset = 30;
+    private static int yOffset = 30;
 
     private static int cellSize = 10;
 
-    private static int numSims = 10;
+    private static int populationSize = 100;
+    private static boolean crossoverBest = true;
+
+    private static int tickFast = 1;
+    private static int tickSlow = 200;
+
 
     public static void main(String[] args) {
 
-        ArrayList<Simulation> simList = new ArrayList<>();
+        Population population = Population.builder()
+                .populationSize(populationSize)
+                .gridWidth(cellSize)
+                .gridHeight(cellSize)
+                .crossoverBest(crossoverBest)
+                .tickFast(tickFast)
+                .tickSlow(tickSlow)
+                .build();
 
-        for (int i = 0; i < numSims; i++) {
-            Simulation sim = new SnakeSimulation(10, 10, 50);
-            Clock clock = new Clock(sim);
-            simList.add(sim);
-            sim.startSimulation();
-            clock.startClock();
-        }
+        population.createFirstPopulation();
 
-        MainFrame app = new MainFrame(simList);
+        MainFrame app = new MainFrame(population);
         app.createWindow(width, height, xOffset, yOffset, cellSize);
+        population.setUpdatableObj(app);
     }
 }

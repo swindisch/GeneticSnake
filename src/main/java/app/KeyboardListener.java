@@ -1,8 +1,7 @@
 package app;
 
-import game.Direction;
+import game.rules.Direction;
 import lombok.Getter;
-import simulation.Simulation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,10 +10,8 @@ import java.awt.event.KeyListener;
 public class KeyboardListener implements KeyListener {
 
     private int keyCode = 0;
-    private Simulation sim;
 
-    public KeyboardListener(Simulation sim) {
-        this.sim = sim;
+    public KeyboardListener() {
     }
 
     @Override
@@ -28,16 +25,12 @@ public class KeyboardListener implements KeyListener {
 
         switch (keyCode) {
             case KeyEvent.VK_W:
-                sim.setDirection(Direction.UP);
                 break;
             case KeyEvent.VK_D:
-                sim.setDirection(Direction.RIGHT);
                 break;
             case KeyEvent.VK_S:
-                sim.setDirection(Direction.DOWN);
                 break;
             case KeyEvent.VK_A:
-                sim.setDirection(Direction.LEFT);
                 break;
         }
     }
