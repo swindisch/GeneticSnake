@@ -12,11 +12,11 @@ public class SnakeGame {
 
     private static int cellSize = 10;
 
-    private static int populationSize = 100;
+    private static int populationSize = 10;
     private static boolean crossoverBest = true;
 
     private static int tickFast = 1;
-    private static int tickSlow = 200;
+    private static int tickSlow = 100;
 
 
     public static void main(String[] args) {

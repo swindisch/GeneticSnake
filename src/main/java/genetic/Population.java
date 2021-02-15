@@ -43,6 +43,7 @@ public class Population implements HeartBeat {
     private int tickFast;
     private int tickSlow;
     private boolean simulationActive;
+    private boolean victory;
 
     private Updatable updatableObj;
     private Selection selection;
@@ -73,7 +74,7 @@ public class Population implements HeartBeat {
         Snake snake = Snake.builder()
                 .startPosX(gridWidth / 2)
                 .startPosY(gridHeight / 2)
-                .life(50)
+                .life(100)
                 .id(id)
                 .build();
 
@@ -112,6 +113,7 @@ public class Population implements HeartBeat {
                 .build();
         clock.startClock();
         generations = 1;
+        victory= false;
     }
 
     @Override
@@ -119,6 +121,8 @@ public class Population implements HeartBeat {
         log.debug("tick() called");
         synchronized (this) {
             snakesAlive = 0;
+
+            if (victory) return;
 
             for (Individual individual : individuals) {
                 individual.checkApple();
@@ -131,7 +135,9 @@ public class Population implements HeartBeat {
                 individual.prepareNextMove();
                 individual.validateNextMove();
                 individual.takeNextMove();
-                individual.validateMove();
+                if (individual.validateMove()) {
+                    victory = true;
+                };
             }
         }
         if (updatableObj != null) updatableObj.update();
@@ -151,9 +157,9 @@ public class Population implements HeartBeat {
                 e.printStackTrace();
             }
 
-            for (int i = 0; i < populationSize; i++) {
-                individuals.get(i).getSnake().setId(i);
-            }
+       //     for (int i = 0; i < populationSize; i++) {
+       //         individuals.get(i).getSnake().setId(i);
+       //     }
             generations++;
         }
      }
@@ -252,6 +258,7 @@ public class Population implements HeartBeat {
     public void loadAndStartPopulation() {
         String fileName = String.format("target/dump/load_best.pop");
         ArrayList<Individual> individuals = new ArrayList<>(getPopulationSize());
+        int lineCount = 0;
 
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(fileName))));
@@ -265,6 +272,12 @@ public class Population implements HeartBeat {
 
                 Individual newIndividual = getNewIndividual(doubleValues, 0);
                 individuals.add(newIndividual);
+
+                lineCount++;
+                if (lineCount >= populationSize) {
+                    break;
+                }
+
                 line = br.readLine();
             }
             br.close();

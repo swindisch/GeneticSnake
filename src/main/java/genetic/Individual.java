@@ -21,7 +21,9 @@ public class Individual implements Comparable<Individual> {
 
     public void checkApple() {
         if (!grid.isAppleExist()) {
-            grid.createApple();
+            if (snake.getVictory() == 0) {
+                grid.createApple();
+            }
         }
     }
 
@@ -53,15 +55,15 @@ public class Individual implements Comparable<Individual> {
         fitness = snake.getFitness();
     }
 
-    public void validateMove() {
+    public boolean validateMove() {
         if (snake.getAppleSteps() > snake.getLife()) {
             snake.setAlive(false);
-            return;
+            return false;
         }
 
         if (Collisions.checkWall(grid, snake.getHead().getPosition()) || Collisions.checkSnake(snake, snake.getHead().getPosition())) {
             snake.setAlive(false);
-            return;
+            return false;
         }
 
         if (Collisions.checkApple(grid.getApple().getPosition(), snake.getHead().getPosition()))
@@ -71,6 +73,13 @@ public class Individual implements Comparable<Individual> {
             snake.setAppleSteps(0);
             grid.deleteApple();
         }
+
+        if (snake.getBodyList().size() == 100) {
+            snake.setVictory(1);
+            snake.setAlive(false);
+            return true;
+        }
+        return false;
     }
 
     public void resetIndividual() {

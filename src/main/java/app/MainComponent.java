@@ -66,6 +66,8 @@ public class MainComponent extends JComponent {
                 Snake snake = individual.getSnake();
                 if (snake.isAlive())
                     g2D.setColor(new Color(50, 220, 50));
+                else if (snake.getVictory() > 0)
+                    g2D.setColor(new Color( 250, 100, 0));
                 else
                     g2D.setColor(new Color(120, 120, 120));
 
@@ -75,6 +77,8 @@ public class MainComponent extends JComponent {
                 });
                 if (snake.isAlive())
                     g2D.setColor(new Color(40, 180, 40));
+                else if (snake.getVictory() > 0)
+                    g2D.setColor(new Color(250, 0, 0));
                 else
                     g2D.setColor(new Color(80, 80, 80));
 

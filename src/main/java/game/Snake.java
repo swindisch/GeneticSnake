@@ -21,6 +21,7 @@ public class Snake {
     private int appleSteps;
     private int applesCollected;
     private int id;
+    private int victory;
 
 
 
@@ -48,7 +49,7 @@ public class Snake {
         allSteps = 0;
         appleSteps = 0;
         applesCollected = 0;
-
+        victory = 0;
         alive = true;
     }
 
@@ -128,6 +129,6 @@ public class Snake {
     }
 
     public int getFitness() {
-        return Math.max(allSteps * 2 + applesCollected * 100 - appleSteps - getHead().getDistanceApple(), 1);
+        return Math.max(allSteps * 2 + applesCollected * 100 - appleSteps - getHead().getDistanceApple() + victory * 1000, 1);
     }
 }

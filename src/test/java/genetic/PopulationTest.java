@@ -28,7 +28,7 @@ class PopulationTest {
     @Test
     void loadAndStartPopulation() {
         Population population = Population.builder()
-                .populationSize(100)
+                .populationSize(10)
                 .gridWidth(10)
                 .gridHeight(10)
                 .crossoverBest(false)
@@ -39,6 +39,7 @@ class PopulationTest {
         population.createFirstPopulation();
 
         population.loadAndStartPopulation();
+        if (population.getClock() != null) population.getClock().stopClock();
 
         while (population.getGenerations() < 30000) {
             population.tick();
