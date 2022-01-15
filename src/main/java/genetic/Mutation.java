@@ -20,7 +20,7 @@ public class Mutation {
             }
         }
 
-        //System.out.println(String.format("DNA: %d - mutated: %d", dna.length, mutated));
+        System.out.println(String.format("DNA: %d - mutated: %d", dna.length, mutated));
         return newDna;
     }
 }
